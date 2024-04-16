@@ -1,57 +1,48 @@
-import { io } from '../index.js';
-import { logInfo } from '../utils/loggers.js';
-import { toBinary } from './../utils/binary.js'
-import { encrypt } from './../utils/encrypt.js'
-let usersConnected = 0;
+// Import necessary modules from other files
+import { io, userMessageCount } from '../index.js';
+import { toBinary } from './../utils/binary.js';
+import { encrypt } from './../utils/encrypt.js';
 
-export const messageEvent = (socket) => {
-  const userMessageCount = new Map();
+// Define a function called messageEvent that takes two parameters: msg (the message content) and room (the chat room)
+export const messageEvent = (msg, room) => {
+  // Get the current timestamp
+  const timestamp = new Date().getTime();
 
-  logInfo('A user has connected!')
-  usersConnected++;
-  logInfo('Total users: ' + usersConnected);
+  // Set a maximum number of messages a user can send
+  const maxMessages = 200;
+  const currentTime = Date.now();
 
-  socket.on('join', (room) => {
-    socket.join(room)
-  })
+  // Check if the user has sent a message before
+  if (!userMessageCount.has(timestamp)) {
+    // If not, create a new entry for the user with an initial count of 1 and the current time
+    userMessageCount.set(timestamp, { 
+      count: 1,
+      lastMessageTime: currentTime 
+    });
+  }
+  else {
+    // If the user has sent messages before, update their message count
+    const userState = userMessageCount.get(timestamp);
 
-  socket.on('disconnect', (room) => {
-    socket.leave(room);
-    logInfo('An user has diconnected')
-    usersConnected--;
-    logInfo('Total users: ' + usersConnected)
-  })
-
-  socket.on('message', (msg, _room) => {
-    const userId = socket.id;
-
-    const maxMessages = 200;
-    const currentTime = Date.now();
-
-    if (!userMessageCount.has(userId)) {
-      userMessageCount.set(userId, { 
-        count: 1,
-        lastMessageTime: currentTime 
-      });
-    }
-    else {
-      const userState = userMessageCount.get(userId);
-
-      if (userState.count >= maxMessages) {
-        return;
-      }
-
-      userState.count++;
-      userState.lastMessageTime = currentTime;
+    // If the user has reached the maximum allowed messages, return without doing anything
+    if (userState.count >= maxMessages) {
+      return;
     }
 
-    setTimeout(() => {
-      userMessageCount.delete(userId);
-    }, 15 * 60 * 1000);
+    // Increment the message count and update the last message time
+    userState.count++;
+    userState.lastMessageTime = currentTime;
+  }
 
-    const message = toBinary(encrypt(msg))
-    
-    // io.to(room).emit('message', msg)
-    io.emit('message', message)
-  })
+  // After 15 minutes, remove the user's message count entry
+  setTimeout(() => {
+    userMessageCount.delete(timestamp);
+  }, 15 * 60 * 1000);
+
+  // Encrypt the message and convert it to binary
+  const message = toBinary(encrypt(msg));
+
+  // Emit the encrypted binary message to the specified chat room
+  io.to(room).emit('message', message);
+  // Alternatively, you can broadcast the message to all connected clients using io.emit('message', message)
 }
