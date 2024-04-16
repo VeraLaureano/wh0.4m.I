@@ -1,16 +1,16 @@
-const toBinary = (string) => {
+export const toBinary = (string) => {
   let result = '';
 
   for (let i = 0; i < string.length; i++) {
       const char = string.charCodeAt(i);
       const binary = char.toString(2); 
       result += binary.padStart(8, '0');
-  }
-
+    }
+    
   return result;
 }
 
-const toString = (binary) => {
+export const toString = (binary) => {
   let result = '';
 
   for (let i = 0; i < binary.length; i += 8) {

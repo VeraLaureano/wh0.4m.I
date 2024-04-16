@@ -101,3 +101,10 @@ ol, ul, li {
   gap: var(--mb-1);
   grid-template-columns: 3fr 1fr;
 }
+
+.join {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

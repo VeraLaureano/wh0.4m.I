@@ -12,7 +12,7 @@ const input = document.getElementById('input')
 const messages = document.getElementById('messages')
 
 socket.on('message', (msg) => {
-  const item = `<li class='chat__message'>${toBinary(btoa(msg))}</li>`
+  const item = `<li class='chat__message'>${msg}</li>`
   messages.insertAdjacentHTML('beforeend', item)
   messages.scrollTop = messages.scrollHeight
 })

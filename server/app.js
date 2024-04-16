@@ -6,9 +6,12 @@ const app = express()
 app.use(logger('dev'))
 app.use(express.static('client'))
 
-app.use('/', (_req, res) => {
-  res.sendFile(process.cwd() + '/client/index.html')
+app.use('/join', (_req, res) => {
+  res.sendFile(process.cwd() + '/client/join.html')
 })
 
+app.use('/chat', (_req, res) => {
+  res.sendFile(process.cwd() + '/client/chat.html')
+})
 
 export default app

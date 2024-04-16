@@ -1,8 +1,20 @@
-export const encryptSHA256 = async (string) =>  {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(string);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-  return hashHex;
+import { encodingChars } from "./encoding.js";
+
+export const encrypt = (msg) => {
+  const arrChars = msg.split("");
+  let text = "";
+  
+  for (let i = arrChars.length - 1; i >= 0; i--) {
+    text += arrChars[i]
+  }
+  
+  let aux = text.split(" ");
+  text = "";
+  for (let i = aux.length - 1; i >= 0; i--) {
+      text += aux[i] + " ";
+  }
+
+  text = encodingChars(text)
+
+  return btoa(text.trim());
 }
