@@ -3,8 +3,8 @@ const form = document.getElementById('form-home');
 const input = document.getElementById('input-home');
 
 const a = Math.floor(Math.random() * 50) + 1
-const b = Math.floor(Math.random() * 90) + 1
-const c = Math.floor(Math.random() * 50) + 1
+const b = Math.floor(Math.random() * 50) + 1
+const c = Math.floor(Math.random() * 99) + 1
 
 const test = (a, b, c) => {
   let d = a + b - c;
@@ -41,10 +41,10 @@ form.addEventListener('submit', (e) => {
 
   if (input.value) {
     if (Math.floor(input.value) === Math.floor(test(c, c - a, b))) {
+      sessionStorage.setItem('pass', true);
       window.location.replace("/join");
     }
-    console.log(Math.floor(input.value));
-    console.log(Math.floor(test(c, c - a, b)));
+
     input.value = '';
   }
 });
