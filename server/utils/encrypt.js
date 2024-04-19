@@ -1,76 +1,68 @@
-// Import the encodingChars function from the specified file
+// Import the encodingChars and decodingChars functions from the specified files
 import CryptoJS from "crypto-js";
 import { decodingChars, encodingChars } from "./encoding.js";
 import { toString } from "./binary.js";
 
-// Define an encrypt function that takes a message (msg) as input
+// Define an encrypt function that takes a message (msg) and a key as input
 export const encrypt = (msg, key) => {
-  // Split the input message into an array of characters
-  console.log('PASO 1: ', msg);
+  // Step 1: Split the input message into an array of characters
   const arrChars = msg.split("");
   let text = "";
   
-  // Reverse the order of characters in the array
+  // Step 2: Reverse the order of characters in the array
   for (let i = arrChars.length - 1; i >= 0; i--) {
     text += arrChars[i];
   }
-  console.log('PASO 2: ', text);
   
-  // Split the reversed text into an array of words
+  // Step 3: Split the reversed text into an array of words and reverse the order of words
   let aux = text.split(" ");
   text = "";
-  // Reverse the order of words in the array
   for (let i = aux.length - 1; i >= 0; i--) {
     text += aux[i] + " ";
   }
-  console.log('PASO 3: ', text);
   
+  // Step 4: Encrypt the text using AES encryption with the provided key
   text = CryptoJS.AES.encrypt(text, key).toString()
-  console.log('PASO 4: ', text);
 
-  // Apply the encodingChars function to the reversed and rearranged text
+  // Step 5: Apply the encodingChars function to the reversed and rearranged text
   text = encodingChars(text);
-  console.log('PASO 5: ', text);
   
-  // Convert the text to base64 encoding and trim any leading/trailing spaces
+  // Step 6: Convert the text to base64 encoding and trim any leading/trailing spaces
   text = btoa(text.trim());
-  console.log('PASO 6: ', text);
   
   return text;
 }
 
+// Define a decrypt function that takes a message (msg) and a key as input
 export const decrypt = (msg, key) => {
-  console.log('PASO 1: ', msg);
-
+  // Step 1: Display the received message
+  // Step 2: Convert the message from binary to string
   let text = toString(msg);
-  console.log('PASO 2: ', text);
 
+  // Step 3: Convert the text from base64 encoding back to string
   text = atob(text);
-  console.log('PASO 3: ', text);
+  console.log('STEP 3: ', text);
   
+  // Step 4: Apply the decodingChars function to the decoded text
   text = decodingChars(text);
-  console.log('PASO 4: ', text);
-  
+
+  // Step 5: Decrypt the text using AES decryption with the provided key
   const bytes  = CryptoJS.AES.decrypt(text, key);
   text = bytes.toString(CryptoJS.enc.Utf8);
-  console.log('PASO 5: ', text);
   
+  // Step 6: Split the decrypted text into an array of words and reverse the order of words
   let aux = text.split(" ");
   text = "";
-  // Reverse the order of words in the array
   for (let i = aux.length - 1; i >= 0; i--) {
     text += aux[i] + " ";
   }
-  console.log('PASO 6: ', text);
   
-  // Split the input message into an array of characters
+  // Step 7: Split the decrypted text into an array of characters and reverse the order of characters
   const arrChars = text.split("");
   text = "";
-  // Reverse the order of characters in the array
   for (let i = arrChars.length - 1; i >= 0; i--) {
     text += arrChars[i];
   }
-  console.log('PASO 7: ', text);
   
   return text;
 }
