@@ -1,7 +1,7 @@
 // Import the encodingChars and decodingChars functions from the specified files
 import CryptoJS from "crypto-js";
 import { decodingChars, encodingChars } from "./encoding.js";
-import { toString } from "./binary.js";
+import { toBinary, toString } from "./binary.js";
 
 // Define an encrypt function that takes a message (msg) and a key as input
 export const encrypt = (msg, key) => {
@@ -30,6 +30,8 @@ export const encrypt = (msg, key) => {
   // Step 6: Convert the text to base64 encoding and trim any leading/trailing spaces
   text = btoa(text.trim());
   
+  text = toBinary(text);
+
   return text;
 }
 
@@ -64,5 +66,5 @@ export const decrypt = (msg, key) => {
     text += arrChars[i];
   }
   
-  return text;
+  return text.trim();
 }

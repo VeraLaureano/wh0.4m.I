@@ -38,11 +38,31 @@ form.addEventListener('submit', (e) => {
   e.preventDefault(); // Prevent the default form submission behavior
   const message_key = window.prompt('Message key: '); // Prompt for a message key
   const message_id = window.prompt('Message id: '); // Prompt for a message id
+  const messagesList = messages.querySelectorAll('li'); // Get all list items in the messages container
+  let isAnExistingId = false;
+
+  if (!message_key || !message_id) {
+    window.alert('Message not sent, invalid key or id.');
+    return;
+  }
 
   // If the input value is not empty
   if (input.value) {
-    // Emit a 'message' event with the input value, 'sessionStorage.key_room', message key, and message id
-    socket.emit('message', input.value, sessionStorage.key_room, message_key, message_id);
+    // Iterate over each message in the list
+    messagesList.forEach((message) => {
+      const content = message.textContent.split(" - "); // Split the message content by ' - '
+  
+      // If the message id matches the provided message id
+      if (String(content[0]) === String(message_id)) {
+        isAnExistingId = true;
+      }
+    });
+    if (!isAnExistingId) {
+      // Emit a 'message' event with the input value, 'sessionStorage.key_room', message key, and message id
+      socket.emit('message', input.value, sessionStorage.key_room, message_key, message_id);
+    } else {
+      window.alert('This id already exist.')
+    }
     input.value = ''; // Clear the input field
   }
 });

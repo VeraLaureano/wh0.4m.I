@@ -37,7 +37,7 @@ export const messageEvent = (msg, room, key, msgId, userId) => {
   }, 15 * 60 * 1000);
 
   // Encrypt the message and convert it to binary
-  const message = toBinary(encrypt(msg, key));
+  const message = encrypt(msg, key);
 
   // Emit the encrypted binary message to the specified chat room
   io.to(room).emit('message', `${msgId} - ${message}`);

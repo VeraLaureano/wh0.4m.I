@@ -1,5 +1,10 @@
+import { isOnlyBinary } from "./isOnlyBinary.js";
+
 // Convert a string to binary representation
 export const toBinary = (string) => {
+  if (isOnlyBinary(string))
+    return string;
+
   let result = '';
 
   // Iterate through each character in the input string
@@ -17,6 +22,9 @@ export const toBinary = (string) => {
 
 // Convert a binary string back to its original string representation
 export const toString = (binary) => {
+  if (!isOnlyBinary(binary)) 
+    return '';
+
   let result = '';
 
   // Process the binary string in chunks of 8 bits (1 byte)

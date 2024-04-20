@@ -46,6 +46,7 @@ ol, ul, li {
 .btn {
   padding: var(--mb-2) var(--mb-3);
   border: none;
+  background-color: #3b3b3b;
 }
 
 .btn:focus {

@@ -1,3 +1,7 @@
+import { io } from "../index.js";
+import { decrypt } from "../utils/encrypt.js";
+import { logInfo } from "../utils/loggers.js";
+
 // Define a function called seeEvent that takes three parameters: msg, key, and id
 export const seeEvent = (msg, key, id) => {
   // Decrypt the message using the provided key
