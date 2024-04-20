@@ -1,5 +1,24 @@
-# **Wh0 4m I - Secret Chat System**
+# **Wh0.4m.I - Secret Chat Application**
 
-010100110100011101101011011100110100100101000101011010110110111001100010010100110100001001001101010110010101100001010110011110010101101001010111010001100111010101100010011110010100001001001010011001000110110101000110011101010100100101000101011001000110110001100011011011010100011001111001010110100100011100111000011001110101011001101101010101100111100101011001010100110011010000111101
+Welcome to the Secret Chat Application! This Node.js and Socket.io-based platform enables users to engage in secure conversations. Here's an overview of how it works:
 
-0101011001000111011010000111000001100011011110010100001001110000011000110111100101000010011010000100100101000111010010100110100001100011001100100110110001101010010010010100100001000010011110010110001000110011010100100111011001100100010010000110110001110111010110100101001101000010011101100101101001101001010000100110100001001001010010000100111001101100010110010011001101001010011011000110010001000011010000100110101001100001010001110100011000110000010010010100100001001110001101010110001100110011010100100110110001100010010100110011010000111101
+### Features
+
+- **Room Access with Key**: Users need to enter a room using the corresponding key.
+- **Message Encryption**: Messages sent to a room are encrypted with a unique encryption key.
+- **Message Retrieval**: Each message is associated with an ID for retrieval purposes.
+- **Double Layer Encryption**: Messages are encoded using an internal algorithm, then encrypted with the AES algorithm using the received key.
+- **Binary Display**: Encrypted messages are converted into a string of binary digits for display.
+- **Decryption Button**: Users can decrypt messages by providing the decryption key along with the ID.
+- **Temporary Message Display**: Upon successful decryption, the message content is displayed momentarily.
+- **Anonymity**: The chat does not store messages in a database to maintain user anonymity. Once the tab is closed, messages cannot be recovered.
+
+### Project Structure
+
+The project is organized into the following folders:
+
+- **client**: Contains client-side views and logic.
+- **server**: Houses the application logic and server configuration.
+  - **events**: Socket.io events are organized into a separate layer for improved readability and scalability.
+
+Feel free to explore and contribute to this secure chat platform!
