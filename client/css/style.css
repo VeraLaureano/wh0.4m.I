@@ -157,9 +157,10 @@ ol, ul, li {
 }
 
 .home__title {
-  font-size: 50px;
+  font-size: 42px;
+  margin-bottom: var(--mb-4);
   font-weight: 400;
-  animation: blink-animation 1s steps(5, start) infinite;
+  animation: blink-animation 1.25s steps(5, start) infinite;
 }
 
 @keyframes blink-animation {

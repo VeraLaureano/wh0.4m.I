@@ -3,10 +3,10 @@ const formJoin = document.getElementById('form-join'); // Reference to the form 
 const inputJoin = document.getElementById('input-join'); // Reference to the input field
 
 // If the pass key in session storage is empty return to home
-if (!sessionStorage.pass) {
-  window.alert("You didn't pass the test");
-  window.location.replace('/');
-}
+//if (!sessionStorage.pass) {
+//  window.alert("You didn't pass the test");
+//  window.location.replace('/');
+//}
 
 // Add an event listener for form submission
 formJoin.addEventListener('submit', (e) => {

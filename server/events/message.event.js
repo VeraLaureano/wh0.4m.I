@@ -1,6 +1,5 @@
 // Import necessary modules from other files
 import { io, userMessageCount } from '../index.js';
-import { toBinary } from './../utils/binary.js';
 import { encrypt } from './../utils/encrypt.js';
 
 // Define a function called messageEvent that takes two parameters: msg (the message content) and room (the chat room)
